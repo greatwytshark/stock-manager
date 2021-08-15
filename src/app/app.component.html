@@ -1,0 +1,169 @@
+<div class="row" id="main-container">
+  <div class="col s12">
+    <div class="card horizontal">
+
+      <div class="card-stacked">
+        <div class="card-content">
+          <h4>
+            <p>Stock</p>
+            <a class="waves-effect waves-light btn" (click)="onOpenModal(null, 'add')">Add product</a>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!--<div class="col s2 m3" *ngFor="let product of products">
+    <div class="card">
+      <div class="card-image">
+        <img src="{{product.imgUrl}}">
+        <a class="btn-floating halfway-fab waves-effect waves-light red" style="align-self: left;"><i class="material-icons">edit</i></a>
+        <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a>
+  
+      </div>
+      <div class="card-content">
+        <span class="card-title teal-text text-darken-1">{{product.name}}</span>
+        <p class="teal-text text-darken-1">${{product.price}}</p>
+      </div>
+    </div>
+  </div>-->
+
+  <div class="col s2 m2" *ngFor="let product of products">
+    <div class="card">
+      <div class="card-image">
+        <img src="{{product.imgUrl}}">
+       
+        <a (click)="onOpenModal(product, 'delete')" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a>
+  
+      </div>
+      <div class="card-content">
+        <span class="card-title teal-text text-darken-1">{{product.name}}</span>
+        <p class="teal-text text-darken-1">${{product.price}}</p>
+        <a (click)="onOpenModal(product, 'edit')" class="waves-effect waves-light btn  " ><i class="material-icons right">edit</i>edit</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Product -->
+  <div id="addProductModal" class="modal">
+    <div class="modal-content">
+      <h4>Add Product</h4>
+      
+      <div class="row">
+        <form class="col s12" #addForm="ngForm" (ngSubmit)="onAddProduct(addForm)">
+          
+          
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="product-name" type="text" class="validate" ngModel name="name" required>
+              <label for="product-name">Product</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="price" type="text" class="validate" ngModel name="price" required>
+              <label for="price">Price</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="imgUrl" type="text" class="validate" ngModel name="imgUrl" required>
+              <label for="imgUrl">Image url</label>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button class="modal-close waves-effect grey darken-1 btn" type="submit">Cancel</button>
+            <button [disabled]="addForm.invalid" class="modal-close waves-effect waves-green btn" type="submit">Add
+              Product</button>
+          </div>
+          
+        </form>
+      </div>
+
+    </div>
+    
+  </div>
+
+  <!-- Edit Product -->
+  <div id="updateProductModal" class="modal">
+    <div class="modal-content">
+      
+      <h4>Update Product {{editProduct?.name}}</h4>
+      
+      <div class="row">
+        <form class="col s12" #editForm="ngForm">
+      
+      
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="product-name" type="text" class="validate" ngModel="{{editProduct?.name}}" name="name" required>
+              <label for="product-name">Product</label>
+            </div>
+          </div>
+
+          
+            
+              <input id="id" type="hidden" ngModel="{{editProduct?.id}}" name="id">
+              
+            
+          
+
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="price" type="text" class="validate"  name="price" ngModel="{{editProduct?.price}}" required>
+              <label for="price">Price</label>
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="imgUrl" type="text" class="validate" ngModel="{{editProduct?.imgUrl}}" name="imgUrl" required>
+              <label for="imgUrl">Image url</label>
+            </div>
+          </div>
+      
+          <div class="modal-footer">
+            <button class="modal-close waves-effect grey darken-1 btn" type="submit">Discard</button>
+            <button (click)="onUpdateProduct(editForm.value)" class="modal-close waves-effect waves-green btn" type="submit">Save Changes</button>
+          </div>
+      
+        </form>
+      </div>
+
+
+    </div>
+    
+  </div>
+
+  <!-- Delete Product -->
+  <div id="deleteProductModal" class="modal">
+    <div class="modal-content">
+      <h4>Remove Product {{deleteProduct?.name}}</h4>
+      <p>Are you sure you want to delete this item!?</p>
+    </div>
+    <div class="modal-footer">
+      <button (click)="onDeleteProduct(deleteProduct?.id)" class="modal-close waves-effect waves-green btn-flat red">Agree</button>
+    </div>
+  </div>
+
+  <div *ngIf="products?.length == 0" class="col s3 offset-s4">
+    <div class="card small center" style="border-radius: 50%;">
+  
+      <div class="card-stacked">
+        <div class="card-content">
+          <h4>
+            <p style="color: red;">No Stock</p>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
